@@ -9,7 +9,7 @@ function Navbar() {
     <nav className="bg-gray-900 text-white px-6 py-4 flex items-center justify-between">
       <Link to="/" className="font-bold text-lg">Movie Watchlist</Link>
       <div className="flex gap-4 text-sm">
-        {user && <div className='flex gap-2'><span>Hello {user.username}</span><button onClick={logout}>Logout</button></div>}
+        {user && <div className='flex gap-4'><span>Hello {user.username}</span><button onClick={logout}>Logout</button></div>}
         {(!user) && <Link to="/login" className="hover:underline">Login</Link>}
       </div>
     </nav>
