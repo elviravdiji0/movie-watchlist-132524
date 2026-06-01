@@ -24,6 +24,13 @@ function MoviesPage() {
     setWatched(false);
   }
 
+  const deleteMovie = (id) => setMovies(prev => prev.filter(movie => movie.id !== id));
+
+  const updateWatched = (id) => setMovies(prev => prev.map(m => {
+    if (m.id === id) return { ...m, watched: !m.watched };
+    return m;
+  }));
+
   return (
     <div className="p-8">
       <h1 className="text-3xl font-bold text-gray-900 mb-6">Movies</h1>
@@ -33,7 +40,7 @@ function MoviesPage() {
         <input type="text" required placeholder="Director *" ref={directorRef} value={director} className="px-2 py-1 border border-gray-200 rounded-md" onChange={e => setDirector(e.target.value)} />
         <input type="text" placeholder="Genre" value={genre} className="px-2 py-1 border border-gray-200 rounded-md" onChange={e => setGenre(e.target.value)} />
         <label><input type="checkbox" checked={watched} onChange={e => setWatched(e.target.checked)} /> I have watched this movie!</label>
-        <button onClick={addMovie} className="bg-green-400 text-white hover:bg-green-500 rounded-md py-1 px-3 w-fit ">Add Movie</button>
+        <button onClick={addMovie} className="bg-green-400 text-white hover:bg-green-500 rounded-md py-1 px-3 w-fit">Add Movie</button>
       </div>
       <div className="flex flex-col gap-4">
         {movies.map(movie => (
@@ -42,6 +49,10 @@ function MoviesPage() {
           <p>Directed by <span className="font-medium">{movie.director}</span></p>
           <p>Genre: <span className="font-medium">{movie.genre}</span></p>
           <p>Status: <span className="font-medium">{movie.watched ? "Watched" : "Planned"}</span></p>
+          <div className="flex gap-2 mt-2">
+            <button className="bg-gray-400 text-white rounded-md hover:bg-gray-500 px-3 py-1 w-fit" onClick={(e, id = movie.id) => updateWatched(id)}>{movie.watched ? "🤔" : "😃"} Toggle Status</button>
+            <button className="bg-red-400 text-white rounded-md hover:bg-red-500 px-3 py-1 w-fit" onClick={(e, id = movie.id) => deleteMovie(id)}>🗑️ Delete</button>
+          </div>
         </div>
         ))}
       </div>
